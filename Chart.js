@@ -2740,19 +2740,23 @@
 				
 			    //#region   added label management in center of doughnuts
 
-				var width = this.chart.width,
-                height = this.chart.height;
+				 var text = this.options.doughnutCenterText;
+				
+                var height = this.chart.height;
+                var fontSize = (height / this.options.doughnutScaleFactorCenterText).toFixed(2);
+                var textY = (height - ((text.split('\n').length-1) * (fontSize * 16))) / 2;
+                var width = this.chart.width;
 
-				var fontSize = (height / this.options.doughnutScaleFactorCenterText).toFixed(2);
-				this.chart.ctx.font = fontSize + "em Verdana";
-				this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
-				this.chart.ctx.textBaseline = "middle";
+                this.chart.ctx.font = fontSize + "em Verdana";
+                this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
+                this.chart.ctx.textBaseline = "middle";
+                    
+				helpers.each(text.split('\n'), function (line, index2) {
 
-			    var text = this.options.doughnutCenterText,
-                    textX = Math.round((width - this.chart.ctx.measureText(text).width) / 2),
-                    textY = height / 2;
+				    var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
 
-				this.chart.ctx.fillText(text, textX, textY);
+			        this.chart.ctx.fillText(line, textX, textY + index2 * (fontSize * 16));
+			    }, this);
 				
 				//#endregion 				
                 
