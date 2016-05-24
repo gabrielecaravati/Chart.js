@@ -181,6 +181,25 @@
 				if (index < this.segments.length-1){
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
+				
+			    //#region   added label management in center of doughnuts
+
+				var width = this.chart.width,
+                height = this.chart.height;
+
+				var fontSize = (height / this.options.doughnutScaleFactorCenterText).toFixed(2);
+				this.chart.ctx.font = fontSize + "em Verdana";
+				this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
+				this.chart.ctx.textBaseline = "middle";
+
+			    var text = this.options.doughnutCenterText,
+                    textX = Math.round((width - this.chart.ctx.measureText(text).width) / 2),
+                    textY = height / 2;
+
+				this.chart.ctx.fillText(text, textX, textY);
+				
+				//#endregion 				
+                
 			},this);
 
 		}

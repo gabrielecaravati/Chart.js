@@ -26,5 +26,18 @@
   },
   "spm": {
     "main": "Chart.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/nnnick/Chart.js/issues"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": ""
 }
