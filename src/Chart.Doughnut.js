@@ -182,7 +182,7 @@
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
 				
-			    //#region   added label management in center of doughnuts
+			    //#region added label management in center of doughnuts
 
 				 var text = this.options.doughnutCenterText;
 				
