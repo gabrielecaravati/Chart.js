@@ -2740,23 +2740,22 @@
 				
 			    //#region added label management in center of doughnuts
 
-				 var text = this.options.doughnutCenterText;
+				var text = this.options.doughnutCenterText;
 				
                 var height = this.chart.height;
-                var fontSize = (height / this.options.doughnutScaleFactorCenterText).toFixed(2);
-                var textY = (height - ((text.split('\n').length-1) * (fontSize * 16))) / 2;
-                var width = this.chart.width;
+	            var width = this.chart.width;
+	            var referenceScaleFactor = height <= width ? height : width;
+	            var fontSize = (referenceScaleFactor / this.options.doughnutScaleFactorCenterText).toFixed(2);
+	            var textY = (height - ((text.split('\n').length - 1) * (fontSize * 16))) / 2;
 
-                this.chart.ctx.font = fontSize + "em Verdana";
-                this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
-                this.chart.ctx.textBaseline = "middle";
-                    
-				helpers.each(text.split('\n'), function (line, index2) {
+	            this.chart.ctx.font = fontSize + "em Verdana";
+	            this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
+	            this.chart.ctx.textBaseline = "middle";
 
-				    var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
-
-			        this.chart.ctx.fillText(line, textX, textY + index2 * (fontSize * 16));
-			    }, this);
+	            helpers.each(text.split('\n'), function (line, index2) {
+	                var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
+	                this.chart.ctx.fillText(line, textX, textY + index2 * (fontSize * 16));
+	            }, this);
 				
 				//#endregion 				
                 
