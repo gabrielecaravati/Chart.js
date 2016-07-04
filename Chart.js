@@ -2741,22 +2741,34 @@
 			    //#region added label management in center of doughnuts
 
 				var text = this.options.doughnutCenterText;
-				
-                var height = this.chart.height;
-	            var width = this.chart.width;
-	            var referenceScaleFactor = height <= width ? height : width;
-	            var fontSize = (referenceScaleFactor / this.options.doughnutScaleFactorCenterText).toFixed(2);
-	            var textY = (height - ((text.split('\n').length - 1) * (fontSize * 16))) / 2;
 
-	            this.chart.ctx.font = fontSize + "em Verdana";
-	            this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
-	            this.chart.ctx.textBaseline = "middle";
+				var height = this.chart.height;
+				var width = this.chart.width;
+				var referenceScaleFactor = height <= width ? height : width;
+				this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
+				this.chart.ctx.textBaseline = "middle";
+				var fontSize = (referenceScaleFactor / this.options.doughnutScaleFactorCenterText).toFixed(2);
+				var fontSizeTemp = 0;
 
-	            helpers.each(text.split('\n'), function (line, index2) {
-	                var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
-	                this.chart.ctx.fillText(line, textX, textY + index2 * (fontSize * 16));
-	            }, this);
-				
+				var textY = 0;
+				helpers.each(text.split('\n'), function (line, index2) {
+					fontSizeTemp = fontSize / (index2 + 1);
+					textY += fontSizeTemp * 16;
+				}, this);
+				textY = (height - textY) / 2;
+
+				var fontHeight = 0;
+				fontSizeTemp = 0;
+				helpers.each(text.split('\n'), function (line, index2) {
+					fontSizeTemp = fontSize / (index2 + 1);
+					this.chart.ctx.font = fontSizeTemp + "em Verdana";
+					var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
+					this.chart.ctx.fillText(line, textX, textY + fontHeight);
+
+					fontHeight += fontSizeTemp * 16;
+
+				}, this);
+
 				//#endregion 				
                 
 			},this);
