@@ -2738,7 +2738,7 @@
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
 				
-			    //#region added label management in center of doughnuts
+			     //#region added label management in center of doughnuts
 
 				var text = this.options.doughnutCenterText;
 
@@ -2747,29 +2747,29 @@
 				var referenceScaleFactor = height <= width ? height : width;
 				this.chart.ctx.fillStyle = this.options.doughnutColorCenterText;
 				this.chart.ctx.textBaseline = "middle";
-				var fontSize = (referenceScaleFactor / this.options.doughnutScaleFactorCenterText).toFixed(2);
-				var fontSizeTemp = 0;
+				
 
+				var fontSizeTemp = 0;
 				var textY = 0;
-				helpers.each(text.split('\n'), function (line, index2) {
-					fontSizeTemp = fontSize / (index2 + 1);
-					textY += fontSizeTemp * 16;
+				helpers.each(text.split('\n'), function (line, index) {
+				    if (index > 0)
+				        fontSizeTemp += (referenceScaleFactor / (this.options.doughnutScaleFactorCenterText * (index + 1))).toFixed(2);
 				}, this);
-				textY = (height - textY) / 2;
+				textY = (height - (fontSizeTemp*16)) / 2;
 
 				var fontHeight = 0;
 				fontSizeTemp = 0;
 				helpers.each(text.split('\n'), function (line, index2) {
-					fontSizeTemp = fontSize / (index2 + 1);
-					this.chart.ctx.font = fontSizeTemp + "em Verdana";
-					var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
-					this.chart.ctx.fillText(line, textX, textY + fontHeight);
+				    fontSizeTemp = (referenceScaleFactor / (this.options.doughnutScaleFactorCenterText * (index2 + 1))).toFixed(2);;
+				    this.chart.ctx.font = fontSizeTemp + "em Verdana";
+				    var textX = Math.round((width - this.chart.ctx.measureText(line).width) / 2);
+				    this.chart.ctx.fillText(line, textX, textY + fontHeight);
 
-					fontHeight += fontSizeTemp * 16;
+				    fontHeight += fontSizeTemp*16;
 
 				}, this);
 
-				//#endregion 				
+			    //#endregion 						
                 
 			},this);
 
